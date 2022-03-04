@@ -1,0 +1,39 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Faculty {
+  id   String @id @default(cuid())
+  name String
+
+  wOpens  String
+  wCloses String
+
+  rooms Room[] @relation("rooms")
+
+}
+
+model Room {
+  id        String  @id
+  name      String
+  faculty   Faculty @relation(name: "rooms", fields: [facultyId], references: [id])
+  facultyId String
+  desks     Desk[]  @relation("desks")
+
+  @@index([facultyId])
+}
+
+model Desk {
+  id     String @id
+  room   Room   @relation(name: "desks", fields: [roomID], references: [id])
+  roomID String
+  order  Int
+}

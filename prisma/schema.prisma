@@ -22,7 +22,7 @@ model Faculty {
 }
 
 model Room {
-  id        String  @id
+  id        String  @id @default(cuid())
   name      String
   faculty   Faculty @relation(name: "rooms", fields: [facultyId], references: [id])
   facultyId String
@@ -32,8 +32,9 @@ model Room {
 }
 
 model Desk {
-  id     String @id
-  room   Room   @relation(name: "desks", fields: [roomID], references: [id])
-  roomID String
+  id     String @id @default(cuid())
+  room   Room   @relation(name: "desks", fields: [roomId], references: [id])
+  roomId String
   order  Int
+
 }

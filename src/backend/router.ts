@@ -11,10 +11,9 @@ export const appRouter = trpc.router()
   .query("rooms", {
     input: z.object({
       faculty: z.string()
-    }).or(z.undefined())
-    ,
+    }).or(z.undefined()),
+
     async resolve({ input }) {
-      console.log(input)
       if (input) {
         return await prisma.room.findMany({
           where: { AND: { facultyId: input.faculty } }

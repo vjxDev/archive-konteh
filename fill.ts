@@ -1,6 +1,10 @@
 import { FileJson } from "@/types";
-import { prisma } from "@/backend/prisma"
+import { PrismaClient } from "@prisma/client";
 
+export const prisma =
+  new PrismaClient({
+    log: ["query"],
+  });
 
 
 // @ts-ignore
@@ -32,7 +36,7 @@ async function fill(): void {
           data: {
             id: desk.id,
             order: desk.order,
-            roomID: room.id
+            roomId: room.id
           }
         })
       }

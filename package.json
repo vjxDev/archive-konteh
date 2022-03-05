@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "fill": "ts-node --compiler-options \"{\\\"module\\\":\\\"commonjs\\\"}\" fill"
+    "fill": "yarn prisma migrate reset && ts-node --compiler-options \"{\\\"module\\\":\\\"commonjs\\\"}\" fill"
   },
   "dependencies": {
     "@prisma/client": "^3.10.0",

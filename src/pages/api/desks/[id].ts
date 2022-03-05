@@ -14,9 +14,25 @@ async function r(req: NextApiRequest, res: NextApiResponse) {
     case "DELETE":
       try {
         const deskId = z.string().parse(id)
-        await prisma.desk.delete({ where: { id: deskId } })
+        console.log(deskId);
+
+        const { roomId, order } = await prisma.desk.delete({ where: { id: deskId } })
+
+        await prisma.desk.updateMany({
+          data: {
+            order: { decrement: 1 }
+          },
+          where: {
+            roomId: roomId,
+            order: {
+              gt: order
+            }
+          }
+        })
         res.status(200).end()
       } catch (error) {
+        console.log(error);
+
         res.status(404).end(`Error`)
       }
       break
